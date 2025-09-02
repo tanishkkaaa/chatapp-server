@@ -2,11 +2,11 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const connection = require("./db/db");
-const userRoute = require("./routes/userRoute");
-const avatarRoute = require("./routes/avatarRoute");
+const connection = require("./db/db.js");
+const userRoute = require("./routes/userRoute.js");
+const avatarRoute = require("./routes/avatarRoute.js");
 const cookieParser = require("cookie-parser");
-const createWebSocketServer = require("./wsServer");
+const createWebSocketServer = require("./wsServer.js");
 const path = require("path");
 //database connection
 connection();
@@ -40,7 +40,7 @@ const server = app.listen(port, () => console.log(`Application Running on Port $
 createWebSocketServer(server);
 const distPath = path.join(__dirname,"..", "..", "frontend", "dist");
 app.use(express.static(distPath));
-app.get("/*", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(distPath, "index.html"), (err) => {
     if (err) {
       console.error('Error sending file:', err);
