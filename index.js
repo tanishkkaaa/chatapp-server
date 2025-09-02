@@ -13,7 +13,6 @@ connection();
 app.use(express.json());
 app.use(cookieParser());
 //middlewares
-app.use(express.json());
 const allowedOrigins = [
 "http://localhost:5173",
 "http://localhost:4000",
@@ -41,8 +40,11 @@ const server = app.listen(port, () => console.log(`Application Running on Port $
 createWebSocketServer(server);
 const distPath = path.join(__dirname,"..", "..", "frontend", "dist");
 app.use(express.static(distPath));
-app.get("/*", (_, res) => res.sendFile(path.join(distPath, "index.html"))), (err) => {
-if (err) {
-console.error('Error sending file:', err);
-}
-}
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(distPath, "index.html"), (err) => {
+    if (err) {
+      console.error('Error sending file:', err);
+      res.status(500).send('Error loading page');
+    }
+  });
+});

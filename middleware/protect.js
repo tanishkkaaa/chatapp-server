@@ -7,7 +7,7 @@ jwt.verify(token, process.env.JWTPRIVATEKEY, {}, (err, user)=>{
 if (err) {
 reject(err);
 } else {
-resolve(userData);
+resolve(user);
 }
 });
 } else {

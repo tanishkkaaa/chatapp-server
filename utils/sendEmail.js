@@ -13,7 +13,7 @@ pass: process.env.SMTP_PASS || process.env.PASS,
 },
 });
 await transporter.sendMail({
-from: process.env.USER,
+from: process.env.SMTP_USER || process.env.EMAIL,
 to: email,
 subject: subject,
 text: text,
